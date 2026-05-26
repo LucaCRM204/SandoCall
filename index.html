@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sando Call — Revenue Operations & Customer Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-2: #F5F8FF;
+  --bg-3: #EEF3FF;
+  --border: rgba(0,87,255,0.1);
+  --border-dark: rgba(0,87,255,0.2);
+  --blue: #0057FF;
+  --blue-light: #EEF3FF;
+  --blue-mid: #3B78FF;
+  --cyan: #00BAFF;
+  --pink: #FF2D9B;
+  --orange: #FF7A00;
+  --yellow: #FFB800;
+  --grad: linear-gradient(135deg, #0057FF 0%, #00BAFF 35%, #FF2D9B 70%, #FF7A00 100%);
+  --grad-soft: linear-gradient(135deg, rgba(0,87,255,0.08), rgba(0,186,255,0.06), rgba(255,45,155,0.06), rgba(255,122,0,0.08));
+  --text: #080E1E;
+  --text-2: #4A5578;
+  --text-3: #9AA5C0;
+  --shadow-sm: 0 2px 12px rgba(0,87,255,0.08);
+  --shadow-md: 0 8px 32px rgba(0,87,255,0.12);
+  --shadow-lg: 0 20px 60px rgba(0,87,255,0.15);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 28px;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ─── Animations ──────────────────────── */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes fade-up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ping{0%{transform:scale(1);opacity:1}75%,100%{transform:scale(2.2);opacity:0}}
+@keyframes orb{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
+@keyframes shimmer{0%{background-position:-400% 0}100%{background-position:400% 0}}
+@keyframes bar-in{from{transform:scaleY(0);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}
+@keyframes pulse-dot{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.65s ease,transform 0.65s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* ─── Global ──────────────────────────── */
+.container{max-width:1160px;margin:0 auto;padding:0 24px}
+.section-tag{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block}
+.gradient-text{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 14px;border-radius:20px;
+  font-size:12px;font-weight:600;
+  background:var(--blue-light);color:var(--blue);
+  border:1px solid var(--border-dark);
+}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);position:relative}
+.live-dot::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:rgba(0,87,255,0.3);animation:ping 1.8s infinite}
+
+/* ─── Nav ─────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  background:rgba(255,255,255,0.88);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px}
+.nav-logo{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:-0.5px;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:10px}
+.logo-icon{
+  width:34px;height:34px;border-radius:10px;
+  background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.logo-call{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;color:var(--text-2);text-decoration:none;transition:color .2s;font-weight:400}
+.nav-links a:hover{color:var(--blue)}
+.btn-nav{
+  background:var(--blue);color:#fff;border:none;
+  padding:10px 22px;border-radius:var(--radius-sm);
+  font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-body);
+  transition:all .2s;text-decoration:none;
+}
+.btn-nav:hover{background:#0047D6;box-shadow:0 6px 20px rgba(0,87,255,0.3)}
+.mob-btn{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:var(--text)}
+
+/* ─── Hero ────────────────────────────── */
+.hero{padding:80px 24px 80px;position:relative;overflow:hidden;background:var(--bg)}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(90px);animation:orb 14s ease-in-out infinite}
+.orb1{width:500px;height:500px;background:radial-gradient(circle,rgba(0,87,255,0.1),transparent 70%);top:-200px;right:-80px}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(255,45,155,0.07),transparent 70%);bottom:-100px;left:5%;animation-delay:-7s}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,rgba(0,186,255,0.07),transparent 70%);top:40%;left:40%;animation-delay:-3s}
+.hero-inner{position:relative;z-index:1;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.hero-pretitle{margin-bottom:22px;animation:fade-up .8s ease both}
+.hero-h1{font-family:var(--font-display);font-size:clamp(38px,5.5vw,66px);font-weight:800;line-height:1.04;letter-spacing:-2px;margin-bottom:22px;animation:fade-up .8s .1s ease both}
+.hero-sub{font-size:17px;color:var(--text-2);line-height:1.75;max-width:490px;margin-bottom:38px;font-weight:300;animation:fade-up .8s .2s ease both}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;animation:fade-up .8s .3s ease both}
+.btn-primary{
+  background:var(--blue);color:#fff;border:none;
+  padding:14px 28px;border-radius:var(--radius-sm);
+  font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font-body);
+  transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{background:#0047D6;transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.btn-outline{
+  background:transparent;color:var(--text);
+  border:1.5px solid var(--border-dark);
+  padding:14px 28px;border-radius:var(--radius-sm);
+  font-size:15px;font-weight:400;cursor:pointer;font-family:var(--font-body);
+  transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-light)}
+
+/* ─── Hero Mockup ─────────────────────── */
+.hero-right{position:relative;animation:float 6s ease-in-out infinite}
+.mockup{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:22px;
+  box-shadow:var(--shadow-lg),0 0 0 1px rgba(0,87,255,0.04);
+}
+.mock-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.mock-title{font-family:var(--font-display);font-size:12px;font-weight:700;color:var(--text-3);letter-spacing:1px}
+.mock-status{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--blue);font-weight:600}
+.mock-status-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse-dot 1.5s infinite}
+.mock-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px}
+.kpi-v{font-family:var(--font-display);font-size:22px;font-weight:800;margin-bottom:1px}
+.kpi-l{font-size:10px;color:var(--text-3);font-weight:400}
+.kpi-c{font-size:10px;font-weight:600;margin-top:3px}
+.up{color:#16A34A}.dn{color:#DC2626}
+.mock-pipe-label{font-size:10px;color:var(--text-3);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.mock-pipe{display:flex;gap:5px;margin-bottom:16px}
+.pipe-seg{height:7px;border-radius:4px;flex:1}
+.mock-list{display:flex;flex-direction:column;gap:7px}
+.mock-row{
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg-2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:9px 11px;
+}
+.av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0}
+.ri{flex:1;min-width:0}
+.rn{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc{font-size:10px;color:var(--text-3)}
+.tag{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:600;white-space:nowrap}
+
+/* Float badges */
+.fb{
+  position:absolute;background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:11px 14px;
+  box-shadow:var(--shadow-md);display:flex;align-items:center;gap:10px;
+}
+.fb-icon{
+  width:34px;height:34px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;
+}
+.fb-t{font-size:12px;font-weight:700;color:var(--text)}
+.fb-s{font-size:10px;color:var(--text-3);margin-top:1px}
+
+/* ─── Trust ───────────────────────────── */
+.trust{padding:24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-2)}
+.trust-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:52px;flex-wrap:wrap}
+.ti{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-3);font-weight:400}
+.ti-i{font-size:16px}
+
+/* ─── About ───────────────────────────── */
+section{padding:96px 24px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.section-h2{font-family:var(--font-display);font-size:clamp(28px,4vw,50px);font-weight:700;line-height:1.08;letter-spacing:-1.5px;margin-bottom:20px}
+.body-text{font-size:16px;color:var(--text-2);line-height:1.8;font-weight:300;margin-bottom:16px}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.pill{
+  background:var(--bg-2);border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);padding:16px;transition:all .2s;cursor:default;
+}
+.pill:hover{border-color:var(--blue);background:var(--blue-light);box-shadow:var(--shadow-sm)}
+.pill-i{font-size:18px;margin-bottom:7px}
+.pill-t{font-size:13px;font-weight:600;margin-bottom:2px}
+.pill-d{font-size:11px;color:var(--text-3)}
+
+/* Chart visual */
+.chart-card{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--radius-lg);padding:28px;
+  box-shadow:var(--shadow-sm);
+}
+.chart-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.chart-title{font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--text-2)}
+.chart-badge{font-size:11px;background:var(--blue-light);color:var(--blue);padding:3px 10px;border-radius:20px;font-weight:600}
+.bars{display:flex;align-items:flex-end;gap:8px;height:130px;padding-bottom:24px;position:relative;border-bottom:1px solid var(--border)}
+.bar{flex:1;border-radius:7px 7px 0 0;position:relative;cursor:default;transition:filter .2s}
+.bar:hover{filter:brightness(1.05)}
+.bar-lbl{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-3);white-space:nowrap;font-weight:500}
+.bar-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;white-space:nowrap}
+.stat-row{display:flex;gap:0;margin-top:22px;border-top:1px solid var(--border);padding-top:18px}
+.stat-item{flex:1;text-align:center;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:var(--font-display);font-size:26px;font-weight:800}
+.stat-lbl{font-size:11px;color:var(--text-3);margin-top:2px}
+
+/* ─── Services ────────────────────────── */
+.sec-head{text-align:center;max-width:600px;margin:0 auto 60px}
+.sec-h2{font-family:var(--font-display);font-size:clamp(26px,4vw,46px);font-weight:700;line-height:1.08;letter-spacing:-1.5px;margin-bottom:14px}
+.sec-sub{font-size:16px;color:var(--text-2);font-weight:300;line-height:1.7}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.srv{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:26px;
+  transition:all .25s;cursor:default;position:relative;overflow:hidden;
+}
+.srv::after{content:'';position:absolute;inset:0;background:var(--grad-soft);opacity:0;transition:.25s}
+.srv:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.srv:hover::after{opacity:1}
+.srv-i{
+  width:46px;height:46px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  margin-bottom:18px;border:1.5px solid var(--border);background:var(--bg-2);
+  position:relative;z-index:1;
+}
+.srv-t{font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:9px;position:relative;z-index:1}
+.srv-d{font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:18px;font-weight:300;position:relative;z-index:1}
+.srv-ul{list-style:none;display:flex;flex-direction:column;gap:5px;position:relative;z-index:1}
+.srv-ul li{font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:6px}
+.srv-ul li::before{content:'→';color:var(--blue);font-size:11px;font-weight:700}
+.srv-feat{
+  border:2px solid transparent;
+  background:linear-gradient(#fff,#fff) padding-box, var(--grad) border-box;
+  box-shadow:var(--shadow-sm);
+}
+
+/* ─── How ─────────────────────────────── */
+.how-bg{background:var(--bg-2)}
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative}
+.how-steps::before{
+  content:'';position:absolute;
+  top:27px;left:calc(12.5% + 27px);right:calc(12.5% + 27px);
+  height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--pink),var(--orange));
+  border-radius:2px;
+}
+.step{text-align:center}
+.step-num{
+  width:54px;height:54px;border-radius:50%;
+  background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:18px;font-weight:800;color:#fff;
+  margin:0 auto 18px;position:relative;z-index:1;
+  box-shadow:0 8px 24px rgba(0,87,255,0.25);
+}
+.step-t{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:8px}
+.step-d{font-size:13px;color:var(--text-2);font-weight:300;line-height:1.6}
+
+/* ─── Tech ────────────────────────────── */
+.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.tech-list{display:flex;flex-direction:column;gap:10px;margin-top:28px}
+.tech-row{
+  display:flex;align-items:center;gap:12px;
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);padding:13px 15px;transition:all .2s;cursor:default;
+}
+.tech-row:hover{border-color:var(--blue);background:var(--blue-light);box-shadow:var(--shadow-sm)}
+.tech-row-i{font-size:18px;width:32px;text-align:center;flex-shrink:0}
+.tech-row-n{font-size:14px;font-weight:500;flex:1}
+.tech-tag{font-size:10px;padding:3px 9px;border-radius:20px;background:var(--blue-light);color:var(--blue);font-weight:600;border:1px solid var(--border-dark)}
+.tech-visual{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--radius-lg);padding:26px;
+  box-shadow:var(--shadow-sm);
+}
+.tv-head{font-family:var(--font-display);font-size:12px;font-weight:700;color:var(--text-3);letter-spacing:1px;margin-bottom:18px}
+.tv-rows{display:flex;flex-direction:column;gap:12px}
+.tv-row{display:flex;flex-direction:column;gap:5px}
+.tv-meta{display:flex;justify-content:space-between;align-items:center}
+.tv-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.tv-label{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500}
+.tv-val{font-size:13px;font-weight:700;color:var(--blue)}
+.tv-bar-bg{height:5px;border-radius:3px;background:var(--bg-2)}
+.tv-bar{height:5px;border-radius:3px;transition:width .8s ease}
+
+/* ─── Industries ──────────────────────── */
+.ind-bg{background:var(--bg-2)}
+.ind-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ind{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:22px 18px;text-align:center;transition:all .2s;cursor:default;
+}
+.ind:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.ind-i{font-size:26px;margin-bottom:10px}
+.ind-n{font-size:13px;font-weight:600}
+.ind-d{font-size:11px;color:var(--text-3);margin-top:3px}
+
+/* ─── Metrics ─────────────────────────── */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.metric{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:30px 22px;text-align:center;
+  transition:all .25s;cursor:default;position:relative;overflow:hidden;
+}
+.metric::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:var(--grad-soft);opacity:0;transition:.3s;
+}
+.metric:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-4px)}
+.metric:hover::before{opacity:1}
+.metric-n{
+  font-family:var(--font-display);
+  font-size:clamp(34px,4vw,50px);font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;z-index:1;
+}
+.metric-l{font-size:14px;color:var(--text-2);margin-top:8px;font-weight:400;position:relative;z-index:1}
+.metric-s{font-size:11px;color:var(--text-3);margin-top:3px;position:relative;z-index:1}
+
+/* ─── Testimonials ────────────────────── */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.test{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:26px;transition:all .2s;
+}
+.test:hover{border-color:var(--blue);box-shadow:var(--shadow-md)}
+.test-stars{display:flex;gap:2px;margin-bottom:14px}
+.test-star{color:var(--orange);font-size:14px}
+.test-q{font-size:15px;color:var(--text-2);line-height:1.7;font-weight:300;margin-bottom:18px;font-style:italic}
+.test-auth{display:flex;align-items:center;gap:10px}
+.test-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+.test-n{font-size:13px;font-weight:600}
+.test-c{font-size:11px;color:var(--text-3)}
+
+/* ─── CTA ─────────────────────────────── */
+.cta-sec{
+  background:linear-gradient(135deg,#0047D6 0%,#0072FF 40%,#006AFF 60%,#0057FF 100%);
+  position:relative;overflow:hidden;
+}
+.cta-orb{position:absolute;border-radius:50%;filter:blur(80px)}
+.co1{width:400px;height:400px;background:rgba(0,186,255,0.25);top:-100px;left:-80px}
+.co2{width:350px;height:350px;background:rgba(255,45,155,0.2);bottom:-80px;right:-60px}
+.cta-inner{position:relative;z-index:1;text-align:center;max-width:680px;margin:0 auto}
+.cta-tag{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:20px;display:block}
+.cta-h{font-family:var(--font-display);font-size:clamp(30px,5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:18px;color:#fff}
+.cta-sub{font-size:17px;color:rgba(255,255,255,0.75);font-weight:300;margin-bottom:38px;line-height:1.6}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-white{
+  background:#fff;color:var(--blue);border:none;
+  padding:15px 32px;border-radius:var(--radius-sm);
+  font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font-body);
+  transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-white:hover{background:#EEF3FF;transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,0.2)}
+.btn-white-out{
+  background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,0.4);
+  padding:15px 32px;border-radius:var(--radius-sm);
+  font-size:15px;font-weight:400;cursor:pointer;font-family:var(--font-body);
+  transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-white-out:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.7)}
+
+/* ─── Footer ──────────────────────────── */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:56px 24px 36px}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:44px}
+.footer-brand{font-family:var(--font-display);font-size:17px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.footer-sub{font-size:13px;color:var(--text-3);line-height:1.6;font-weight:300}
+.fcol-t{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-2);margin-bottom:14px}
+.fcol-l{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fcol-l a{font-size:13px;color:var(--text-3);text-decoration:none;transition:color .2s}
+.fcol-l a:hover{color:var(--blue)}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:22px;flex-wrap:wrap;gap:10px}
+.footer-copy{font-size:12px;color:var(--text-3)}
+.footer-by{font-size:12px;color:var(--text-3)}
+.footer-by a{color:var(--blue);text-decoration:none}
+
+/* ─── Responsive ──────────────────────── */
+@media(max-width:1024px){
+  .hero-inner,.about-grid,.tech-grid{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .srv-grid{grid-template-columns:1fr 1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .ind-grid{grid-template-columns:repeat(2,1fr)}
+  .how-steps{grid-template-columns:1fr 1fr}
+  .how-steps::before{display:none}
+  .test-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}.mob-btn{display:block}
+  section{padding:60px 16px}
+  .srv-grid{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .ind-grid{grid-template-columns:1fr 1fr}
+  .how-steps{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .trust-inner{gap:20px}
+  .pillars{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-icon">🎧</div>
+      <span>Sando <span class="logo-call">Call</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#tecnologia">Tecnología</a>
+      <a href="#industrias">Industrias</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a href="#contacto" class="btn-nav">Agendar reunión →</a>
+    <button class="mob-btn" onclick="toggleMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+  </div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-pretitle">
+        <span class="badge"><span class="live-dot"></span>Human + AI · Revenue Operations</span>
+      </div>
+      <h1 class="hero-h1">Convertimos<br><span class="gradient-text">conversaciones</span><br>en ventas.</h1>
+      <p class="hero-sub">Sando Call ayuda a empresas a vender más, responder más rápido y automatizar su operación comercial mediante operadores especializados, inteligencia artificial y tecnología de clase mundial.</p>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn-primary">Agendar reunión →</a>
+        <a href="#servicios" class="btn-outline">Ver servicios</a>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="hero-right">
+      <div class="fb" style="top:-18px;right:-24px;animation:fade-up .8s .5s ease both">
+        <div class="fb-icon" style="background:var(--blue-light)">🤖</div>
+        <div><div class="fb-t">IA activa</div><div class="fb-s">847 conv. hoy</div></div>
+      </div>
+
+      <div class="mockup" style="animation:fade-up .7s .3s ease both">
+        <div class="mock-top">
+          <span class="mock-title">PIPELINE · HOY</span>
+          <div class="mock-status"><span class="mock-status-dot"></span>En vivo</div>
+        </div>
+        <div class="mock-kpis">
+          <div class="kpi"><div class="kpi-v" style="color:var(--blue)">247</div><div class="kpi-l">Leads nuevos</div><div class="kpi-c up">↑ +18%</div></div>
+          <div class="kpi"><div class="kpi-v" style="color:#16A34A">83%</div><div class="kpi-l">Respuesta</div><div class="kpi-c up">↑ +4%</div></div>
+          <div class="kpi"><div class="kpi-v" style="color:var(--orange)">$48k</div><div class="kpi-l">Revenue</div><div class="kpi-c up">↑ +22%</div></div>
+        </div>
+        <div class="mock-pipe-label">Distribución pipeline</div>
+        <div class="mock-pipe">
+          <div class="pipe-seg" style="background:var(--blue);flex:1.3"></div>
+          <div class="pipe-seg" style="background:var(--cyan);flex:1"></div>
+          <div class="pipe-seg" style="background:var(--pink);flex:.8"></div>
+          <div class="pipe-seg" style="background:var(--orange);flex:.6"></div>
+          <div class="pipe-seg" style="background:#16A34A;flex:.4"></div>
+        </div>
+        <div class="mock-list">
+          <div class="mock-row">
+            <div class="av" style="background:rgba(0,87,255,0.1);color:var(--blue)">MR</div>
+            <div class="ri"><div class="rn">Martín Rodríguez</div><div class="rc">Automotora Delta</div></div>
+            <div class="tag" style="background:rgba(22,163,74,0.1);color:#16A34A">Vendido</div>
+          </div>
+          <div class="mock-row">
+            <div class="av" style="background:rgba(255,122,0,0.1);color:var(--orange)">LP</div>
+            <div class="ri"><div class="rn">Laura Pérez</div><div class="rc">Clínica Luminos</div></div>
+            <div class="tag" style="background:rgba(255,184,0,0.1);color:var(--yellow)">Propuesta</div>
+          </div>
+          <div class="mock-row">
+            <div class="av" style="background:rgba(255,45,155,0.1);color:var(--pink)">JG</div>
+            <div class="ri"><div class="rn">Jorge García</div><div class="rc">Seguros del Norte</div></div>
+            <div class="tag" style="background:rgba(0,87,255,0.08);color:var(--blue)">Entrevista</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb" style="bottom:-18px;left:-20px;animation:fade-up .8s .65s ease both">
+        <div class="fb-icon" style="background:rgba(0,186,255,0.1)">💬</div>
+        <div><div class="fb-t">WhatsApp API</div><div class="fb-s">Resp. &lt; 90 seg</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust">
+  <div class="trust-inner">
+    <div class="ti"><span class="ti-i">⚡</span>Powered by AI</div>
+    <div class="ti"><span class="ti-i">📱</span>WhatsApp Business API</div>
+    <div class="ti"><span class="ti-i">🔒</span>Datos seguros</div>
+    <div class="ti"><span class="ti-i">🌎</span>Operación 24/7</div>
+    <div class="ti"><span class="ti-i">📊</span>CRM integrado</div>
+    <div class="ti"><span class="ti-i">🚀</span>Revenue Outsourcing</div>
+  </div>
+</div>
+
+<!-- QUIÉNES SOMOS -->
+<section id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+      <div class="fade-up">
+        <span class="section-tag">Quiénes somos</span>
+        <h2 class="section-h2">No somos un call center.<br><span class="gradient-text">Somos tu equipo de revenue.</span></h2>
+        <p class="body-text">Sando Call es una empresa de Revenue Operations y Customer Experience. Combinamos operadores humanos especializados con inteligencia artificial para que tu empresa venda más, pierda menos leads y entregue experiencias memorables.</p>
+        <p class="body-text">Operamos como una extensión de tu equipo comercial, con métricas claras, tecnología propia y un modelo orientado a resultados.</p>
+        <div class="pillars">
+          <div class="pill"><div class="pill-i">🧠</div><div class="pill-t">IA Conversacional</div><div class="pill-d">Entrenada para tu negocio</div></div>
+          <div class="pill"><div class="pill-i">👥</div><div class="pill-t">Equipo humano</div><div class="pill-d">Operadores por industria</div></div>
+          <div class="pill"><div class="pill-i">📊</div><div class="pill-t">Reportes en vivo</div><div class="pill-d">Métricas 24/7</div></div>
+          <div class="pill"><div class="pill-i">⚡</div><div class="pill-t">Implementación rápida</div><div class="pill-d">Operando en 7 días</div></div>
+        </div>
+      </div>
+      <div class="chart-card fade-up d2">
+        <div class="chart-head">
+          <div class="chart-title">CONVERSIÓN POR CANAL</div>
+          <div class="chart-badge">Últimos 30 días</div>
+        </div>
+        <div class="bars">
+          <div class="bar" style="height:55%;background:linear-gradient(to top,var(--blue),rgba(0,87,255,0.3))">
+            <span class="bar-lbl">WhatsApp</span><span class="bar-val" style="color:var(--blue)">55%</span>
+          </div>
+          <div class="bar" style="height:38%;background:linear-gradient(to top,var(--cyan),rgba(0,186,255,0.3))">
+            <span class="bar-lbl">Tel.</span><span class="bar-val" style="color:var(--cyan)">38%</span>
+          </div>
+          <div class="bar" style="height:72%;background:linear-gradient(to top,var(--blue),rgba(0,87,255,0.3))">
+            <span class="bar-lbl">Web</span><span class="bar-val" style="color:var(--blue)">72%</span>
+          </div>
+          <div class="bar" style="height:61%;background:linear-gradient(to top,var(--pink),rgba(255,45,155,0.25))">
+            <span class="bar-lbl">Email</span><span class="bar-val" style="color:var(--pink)">61%</span>
+          </div>
+          <div class="bar" style="height:88%;background:linear-gradient(to top,var(--orange),rgba(255,122,0,0.3))">
+            <span class="bar-lbl">IA Bot</span><span class="bar-val" style="color:var(--orange)">88%</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-item"><div class="stat-num gradient-text" data-count="50000">0</div><div class="stat-lbl">Leads gestionados</div></div>
+          <div class="stat-item"><div class="stat-num gradient-text" data-count="98">0</div><div class="stat-lbl">% satisfacción</div></div>
+          <div class="stat-item"><div class="stat-num gradient-text" data-count="120">0</div><div class="stat-lbl">Clientes activos</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios" style="background:var(--bg-2)">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="section-tag">Servicios</span>
+      <h2 class="sec-h2">Todo lo que tu operación comercial necesita</h2>
+      <p class="sec-sub">Soluciones modulares que se integran a tu stack tecnológico y escalan con tu negocio.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv fade-up"><div class="srv-i">💬</div><div class="srv-t">Atención WhatsApp</div><div class="srv-d">Respondemos tus consultas en menos de 90 segundos. Atención omnicanal con seguimiento automático.</div><ul class="srv-ul"><li>Respuesta rápida garantizada</li><li>Atención omnicanal</li><li>Seguimiento automático</li><li>Agentes especializados</li></ul></div>
+      <div class="srv fade-up d1"><div class="srv-i">📞</div><div class="srv-t">Ventas telefónicas</div><div class="srv-d">Cerramos ventas, hacemos seguimiento de leads y maximizamos tu tasa de conversión telefónica.</div><ul class="srv-ul"><li>Cierre comercial especializado</li><li>Seguimiento de leads</li><li>Scripts personalizados</li><li>Reporting diario</li></ul></div>
+      <div class="srv fade-up d2"><div class="srv-i">📅</div><div class="srv-t">Agendamiento de citas</div><div class="srv-d">Setters especializados que califican y agendan reuniones con tus prospectos de mayor valor.</div><ul class="srv-ul"><li>Setters calificados</li><li>Recordatorios automáticos</li><li>Confirmaciones multicanal</li><li>CRM integrado</li></ul></div>
+      <div class="srv fade-up"><div class="srv-i">💰</div><div class="srv-t">Cobranzas inteligentes</div><div class="srv-d">Recuperamos cartera con un enfoque omnicanal y predictive dialer para máximo alcance.</div><ul class="srv-ul"><li>Gestión omnicanal</li><li>Automatización de flujos</li><li>Predictive dialer</li><li>Reportes de recupero</li></ul></div>
+      <div class="srv fade-up d1"><div class="srv-i">⚙️</div><div class="srv-t">CRM + Automatización</div><div class="srv-d">Pipeline visual, dashboards en tiempo real y workflows automatizados para tu equipo comercial.</div><ul class="srv-ul"><li>Pipeline Kanban</li><li>Dashboards y métricas</li><li>IA integrada</li><li>Workflows personalizados</li></ul></div>
+      <div class="srv srv-feat fade-up d2"><div class="srv-i" style="background:var(--blue-light);border-color:var(--border-dark)">🧠</div><div class="srv-t">IA Conversacional</div><div class="srv-d">Asistentes de IA entrenados en tu negocio que atienden, clasifican y responden 24/7 sin intervención humana.</div><ul class="srv-ul"><li>Asistentes entrenados a medida</li><li>Clasificación automática</li><li>Respuestas inteligentes</li><li>Handoff a agente humano</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="how-bg">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="section-tag">Cómo funciona</span>
+      <h2 class="sec-h2">Operando en 4 pasos</h2>
+      <p class="sec-sub">Implementación rápida, sin fricciones, con resultados medibles desde el primer día.</p>
+    </div>
+    <div class="how-steps">
+      <div class="step fade-up"><div class="step-num">1</div><h3 class="step-t">Diagnóstico</h3><p class="step-d">Analizamos tu proceso comercial actual, volumen de leads y canales de atención.</p></div>
+      <div class="step fade-up d1"><div class="step-num">2</div><h3 class="step-t">Diseño</h3><p class="step-d">Configuramos tu CRM, flujos de WhatsApp, scripts de ventas y automatizaciones.</p></div>
+      <div class="step fade-up d2"><div class="step-num">3</div><h3 class="step-t">Activación</h3><p class="step-d">Tu equipo Sando Call entra en operación. Leads atendidos desde el día uno.</p></div>
+      <div class="step fade-up d3"><div class="step-num">4</div><h3 class="step-t">Optimización</h3><p class="step-d">Reportes semanales, A/B testing y mejora continua basada en datos reales.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECNOLOGÍA -->
+<section id="tecnologia">
+  <div class="container">
+    <div class="tech-grid">
+      <div class="fade-up">
+        <span class="section-tag">Tecnología</span>
+        <h2 class="section-h2">Stack de clase<br><span class="gradient-text">enterprise.</span></h2>
+        <p class="body-text">Integramos las mejores herramientas del mercado con tecnología propia para darte una operación sólida, medible y escalable.</p>
+        <div class="tech-list">
+          <div class="tech-row"><span class="tech-row-i">💬</span><span class="tech-row-n">WhatsApp Business API</span><span class="tech-tag">Oficial</span></div>
+          <div class="tech-row"><span class="tech-row-i">🧠</span><span class="tech-row-n">IA Conversacional propia</span><span class="tech-tag">Powered by AI</span></div>
+          <div class="tech-row"><span class="tech-row-i">📊</span><span class="tech-row-n">CRM + Pipeline visual</span><span class="tech-tag">Real-time</span></div>
+          <div class="tech-row"><span class="tech-row-i">📞</span><span class="tech-row-n">Discador predictivo</span><span class="tech-tag">Integrado</span></div>
+          <div class="tech-row"><span class="tech-row-i">⚡</span><span class="tech-row-n">Automatización de workflows</span><span class="tech-tag">No-code</span></div>
+          <div class="tech-row"><span class="tech-row-i">📈</span><span class="tech-row-n">Analytics avanzado</span><span class="tech-tag">Dashboards</span></div>
+        </div>
+      </div>
+      <div class="tech-visual fade-up d2">
+        <div class="tv-head">PERFORMANCE EN VIVO</div>
+        <div class="tv-rows">
+          <div class="tv-row">
+            <div class="tv-meta"><div class="tv-label"><div class="tv-dot" style="background:#16A34A"></div>Tiempo respuesta</div><div class="tv-val">87 seg</div></div>
+            <div class="tv-bar-bg"><div class="tv-bar" style="width:15%;background:linear-gradient(90deg,var(--blue),var(--cyan))"></div></div>
+          </div>
+          <div class="tv-row">
+            <div class="tv-meta"><div class="tv-label"><div class="tv-dot" style="background:var(--blue)"></div>Tasa de contacto</div><div class="tv-val">76%</div></div>
+            <div class="tv-bar-bg"><div class="tv-bar" style="width:76%;background:linear-gradient(90deg,var(--blue),var(--cyan))"></div></div>
+          </div>
+          <div class="tv-row">
+            <div class="tv-meta"><div class="tv-label"><div class="tv-dot" style="background:var(--pink)"></div>Satisfacción del cliente</div><div class="tv-val">4.9/5</div></div>
+            <div class="tv-bar-bg"><div class="tv-bar" style="width:98%;background:linear-gradient(90deg,var(--blue),var(--pink))"></div></div>
+          </div>
+          <div class="tv-row">
+            <div class="tv-meta"><div class="tv-label"><div class="tv-dot" style="background:var(--orange)"></div>Conversión a venta</div><div class="tv-val">34%</div></div>
+            <div class="tv-bar-bg"><div class="tv-bar" style="width:34%;background:linear-gradient(90deg,var(--orange),var(--yellow))"></div></div>
+          </div>
+          <div class="tv-row">
+            <div class="tv-meta"><div class="tv-label"><div class="tv-dot" style="background:#16A34A"></div>Uptime del sistema</div><div class="tv-val">99.9%</div></div>
+            <div class="tv-bar-bg"><div class="tv-bar" style="width:99%;background:linear-gradient(90deg,#16A34A,#4ADE80)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIAS -->
+<section id="industrias" class="ind-bg">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="section-tag">Industrias</span>
+      <h2 class="sec-h2">Experiencia en tu sector</h2>
+      <p class="sec-sub">Operadores y flujos especializados por industria. No adaptamos procesos genéricos.</p>
+    </div>
+    <div class="ind-grid">
+      <div class="ind fade-up"><div class="ind-i">🚗</div><div class="ind-n">Concesionarias</div><div class="ind-d">Test drives, planes, financiación</div></div>
+      <div class="ind fade-up d1"><div class="ind-i">🏠</div><div class="ind-n">Inmobiliarias</div><div class="ind-d">Compradores, visitas, cierres</div></div>
+      <div class="ind fade-up d2"><div class="ind-i">🏥</div><div class="ind-n">Salud y Clínicas</div><div class="ind-d">Turnos, recordatorios, seguimiento</div></div>
+      <div class="ind fade-up d3"><div class="ind-i">💄</div><div class="ind-n">Clínicas estéticas</div><div class="ind-d">Consultas, presupuestos, agenda</div></div>
+      <div class="ind fade-up"><div class="ind-i">💳</div><div class="ind-n">Fintech</div><div class="ind-d">Onboarding, cobranzas, soporte</div></div>
+      <div class="ind fade-up d1"><div class="ind-i">🎓</div><div class="ind-n">Educación</div><div class="ind-d">Inscripciones, retención</div></div>
+      <div class="ind fade-up d2"><div class="ind-i">🛡️</div><div class="ind-n">Seguros</div><div class="ind-d">Cotizaciones, renovaciones</div></div>
+      <div class="ind fade-up d3"><div class="ind-i">🛒</div><div class="ind-n">E-commerce</div><div class="ind-d">Soporte, recupero de carrito</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTRICAS -->
+<section id="resultados">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="section-tag">Resultados</span>
+      <h2 class="sec-h2">Números que importan</h2>
+      <p class="sec-sub">Resultados reales de clientes reales. Sin humo.</p>
+    </div>
+    <div class="metrics-grid">
+      <div class="metric fade-up"><div class="metric-n"><span class="counter" data-target="87">0</span>%</div><div class="metric-l">Reducción en tiempo de respuesta</div><div class="metric-s">vs. atención manual</div></div>
+      <div class="metric fade-up d1"><div class="metric-n"><span class="counter" data-target="3">0</span>x</div><div class="metric-l">Aumento en tasa de conversión</div><div class="metric-s">promedio entre clientes</div></div>
+      <div class="metric fade-up d2"><div class="metric-n"><span class="counter" data-target="50000">0</span>+</div><div class="metric-l">Leads atendidos por mes</div><div class="metric-s">en toda la operación</div></div>
+      <div class="metric fade-up d3"><div class="metric-n">24/7</div><div class="metric-l">Disponibilidad operativa</div><div class="metric-s">sin interrupciones</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section style="background:var(--bg-2)">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="section-tag">Testimonios</span>
+      <h2 class="sec-h2">Lo que dicen nuestros clientes</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test fade-up">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-q">"Desde que sumamos Sando Call, nuestra tasa de contacto subió un 240%. Los operadores conocen el negocio automotriz como si fueran del equipo."</p>
+        <div class="test-auth">
+          <div class="test-av" style="background:rgba(0,87,255,0.1);color:var(--blue)">MF</div>
+          <div><div class="test-n">Marcelo Fernández</div><div class="test-c">Director Comercial · Grupo Automotor Delta</div></div>
+        </div>
+      </div>
+      <div class="test fade-up d1">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-q">"El bot de WhatsApp atiende el 80% de las consultas solo. Lo que antes tardaba horas ahora tarda minutos. Una locura lo que logramos juntos."</p>
+        <div class="test-auth">
+          <div class="test-av" style="background:rgba(255,45,155,0.1);color:var(--pink)">AC</div>
+          <div><div class="test-n">Andrea Castro</div><div class="test-c">CEO · Clínica Estética Luminos</div></div>
+        </div>
+      </div>
+      <div class="test fade-up d2">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-q">"Implementaron en 5 días. El primer mes recuperamos más cartera que en los 3 meses anteriores. El ROI fue inmediato y completamente medible."</p>
+        <div class="test-auth">
+          <div class="test-av" style="background:rgba(255,122,0,0.1);color:var(--orange)">RG</div>
+          <div><div class="test-n">Ricardo Gómez</div><div class="test-c">CFO · Fintech Crédito Ágil</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="contacto" class="cta-sec">
+  <div class="cta-orb co1"></div>
+  <div class="cta-orb co2"></div>
+  <div class="container">
+    <div class="cta-inner fade-up">
+      <span class="cta-tag">¿Listo para escalar?</span>
+      <h2 class="cta-h">Tu empresa no necesita<br>más leads. Necesita<br>responder mejor.</h2>
+      <p class="cta-sub">Agendá una reunión de 30 minutos y te mostramos exactamente cómo Sando Call puede transformar tu operación comercial.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/5491100000000" class="btn-white">Agendar una reunión →</a>
+        <a href="mailto:hola@sandocall.com" class="btn-white-out">Escribinos por mail</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <div class="logo-icon" style="width:28px;height:28px;border-radius:8px;font-size:13px">🎧</div>
+          <span>Sando <span class="logo-call">Call</span></span>
+        </div>
+        <p class="footer-sub">Revenue Operations & Customer Experience.<br>Conectamos personas. Impulsamos negocios.</p>
+      </div>
+      <div>
+        <div class="fcol-t">Servicios</div>
+        <ul class="fcol-l">
+          <li><a href="#servicios">Atención WhatsApp</a></li>
+          <li><a href="#servicios">Ventas telefónicas</a></li>
+          <li><a href="#servicios">Agendamiento</a></li>
+          <li><a href="#servicios">Cobranzas</a></li>
+          <li><a href="#servicios">IA Conversacional</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fcol-t">Empresa</div>
+        <ul class="fcol-l">
+          <li><a href="#nosotros">Quiénes somos</a></li>
+          <li><a href="#tecnologia">Tecnología</a></li>
+          <li><a href="#industrias">Industrias</a></li>
+          <li><a href="#resultados">Resultados</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="fcol-t">Contacto</div>
+        <ul class="fcol-l">
+          <li><a href="mailto:hola@sandocall.com">hola@sandocall.com</a></li>
+          <li><a href="https://wa.me/5491100000000">WhatsApp</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <div class="footer-copy">© 2025 Sando Call. Todos los derechos reservados.</div>
+      <div class="footer-by">Desarrollado por <a href="#">Alluma Publicidad</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') })
+}, { threshold:.1, rootMargin:'0px 0px -40px 0px' })
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el))
+
+function animCount(el, target, dur=2000) {
+  const start = performance.now()
+  const big = target >= 1000
+  const run = t => {
+    const p = Math.min((t-start)/dur, 1)
+    const e = 1-Math.pow(1-p, 3)
+    const v = Math.floor(e*target)
+    el.textContent = big ? v.toLocaleString('es-AR') : v
+    if(p < 1) requestAnimationFrame(run)
+    else el.textContent = big ? target.toLocaleString('es-AR') : target
+  }
+  requestAnimationFrame(run)
+}
+
+const cObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      const t = parseInt(e.target.dataset.target || e.target.dataset.count)
+      if(t) animCount(e.target, t)
+      cObs.unobserve(e.target)
+    }
+  })
+}, { threshold:.5 })
+document.querySelectorAll('.counter,[data-count]').forEach(el => cObs.observe(el))
+
+function toggleMenu() {
+  const l = document.querySelector('.nav-links')
+  if(l.style.display === 'flex') { l.style.display = '' } else {
+    l.style.cssText = 'display:flex;flex-direction:column;position:fixed;top:66px;left:0;right:0;background:rgba(255,255,255,0.97);padding:24px;border-bottom:1px solid rgba(0,87,255,0.1);backdrop-filter:blur(20px);z-index:99;gap:20px;'
+  }
+}
+</script>
+</body>
+</html>
